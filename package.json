@@ -1,5 +1,5 @@
 {
-  "name": "p2p-chat-web-ui",
+  "name": "p2p-chat-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
