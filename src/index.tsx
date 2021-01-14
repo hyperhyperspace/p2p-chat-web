@@ -4,7 +4,14 @@ import './index.css';
 import ChatView from './ChatView';
 import reportWebVitals from './reportWebVitals';
 
-const chat = [['new2css', "okay but what if"],
+import { PeerResources } from './hhs-react-hooks';
+import { Resources, StateGossipAgent } from '@hyper-hyper-space/core';
+
+import { ObjectDiscoveryAgent } from '@hyper-hyper-space/core';
+
+import { } from '@hyper-hyper-space/p2p-chat';
+
+/*const chat = [['new2css', "okay but what if"],
               ['new2css', "i never use the inner-text-width class?"],
               ['new2css', "but my CSS still has it?"],
               ['tenfourover', "it's fine. it'll be fine."],
@@ -12,13 +19,29 @@ const chat = [['new2css', "okay but what if"],
 
 const props = {messages: chat.map((m:Array<string>) => ({author: m[0], text: m[1] })),
               active: ['new2css', 'tenfourover'],
-              inactive: ['byzan10', 'johnnee']}
+              inactive: ['byzan10', 'johnnee']}*/
 
+
+
+let resources: Resources = new Resources();
+
+console.log(resources);
+
+console.log(ObjectDiscoveryAgent.log.level);
+
+ObjectDiscoveryAgent.log.level = 2;
+StateGossipAgent.controlLog.level = 0;
+StateGossipAgent.peerMessageLog.level = 2;
+
+console.log(ObjectDiscoveryAgent.log.level);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChatView {...props} />
+    <PeerResources.Provider value={resources}>
+      <ChatView init={{wordCode: ['thwart', 'boxer', 'episode'], wordCodeLang: 'en'}} />
+    </PeerResources.Provider>
   </React.StrictMode>,
+
   document.getElementById('root')
 );
 
