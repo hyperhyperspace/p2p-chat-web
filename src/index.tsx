@@ -34,12 +34,11 @@ const main = async () => {
 
 
   const location = window.location.hash.substr(2);
-  const [lang, words] = location.split('/');
+  const [wordCodeLang, words] = location.split('/');
   const wordCode = words !== undefined? words.split('-') : undefined;
 
   const chatConfigStore = new Store(new IdbBackend('chat-config'));
   //const wordCode = ['eggplant', 'erosion', 'absolute'];
-  const wordCodeLang = 'en';
   const chatRoomConfig = new ChatRoomConfig(wordCode, wordCodeLang);
 
   await chatConfigStore.save(chatRoomConfig); // this will bind it to the store
@@ -70,7 +69,7 @@ const main = async () => {
           <ChatView chatRoomName={chatRoomName} chatRoomConfig={chatRoomConfig} init={{wordCode: wordCode, wordCodeLang: wordCodeLang}} />
         }
         { !chatRoomName && 
-          <div> No chat room name specified, use the format #!/en/pineapple-super-great </div>
+          <div> No chat room name specified, use the format #/en/acre-cliff-busy </div>
         }
       </PeerComponent>
     </React.StrictMode>,

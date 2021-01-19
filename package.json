@@ -4,6 +4,7 @@
   "author": "Santiago Bazerque",
   "license": "MIT",
   "private": false,
+  "homepage": "./",
 
   "dependencies": {
     "@hyper-hyper-space/core": "0.6.1",
