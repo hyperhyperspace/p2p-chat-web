@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import MessageLog from './MessageLog';
 //import OnlineBox from './OnlineBox';
 import MessageInput from './MessageInput';
 
 import './ChatView.css';
-import { SpaceInit } from '@hyper-hyper-space/core';
+import { Identity, SpaceInit, Store } from '@hyper-hyper-space/core';
 import { useStateObject, useSpace, usePeerResources } from './hhs-react-hooks';
-import { ChatRoom } from '@hyper-hyper-space/p2p-chat';
+import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 
-function ChatView(props: {init: SpaceInit}) {
-  const resources = usePeerResources();
+function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatRoomName: string}) {
+  //const resources = usePeerResources();
   const entry = useSpace<ChatRoom>(props.init, true);
   //let topic = useStateObject(entry?.topic);
-  entry?.messages?.setResources(resources);
+  //entry?.messages?.setResources(resources);
   const messages = useStateObject(entry?.messages)?.value;
+  
+
 
   if (entry === undefined) {
     return (
@@ -22,9 +24,9 @@ function ChatView(props: {init: SpaceInit}) {
     );
   } else {
       return (
-        <div id="chatView" className="tablet overlay margin-bottom gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
+        <div id="chatView" className="tablet overlay no-margins padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
           <MessageLog messages={messages} />
-          <MessageInput room={entry}/>
+          <MessageInput room={entry} chatRoomConfig={props.chatRoomConfig}/>
         </div>
       );
   }

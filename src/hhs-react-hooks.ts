@@ -3,10 +3,15 @@ import React, { useContext, useState, useEffect } from 'react';
 
 
 const PeerResources = React.createContext<Resources>(new Resources());
+const PeerResourcesUpdater = React.createContext<React.Dispatch<React.SetStateAction<Resources>>>(() => { });
 
 const usePeerResources: () => Resources = () => {
     return useContext(PeerResources);
 }
+
+const usePeerResourcesUpdater: () => React.Dispatch<React.SetStateAction<Resources>> = () => {
+    return useContext(PeerResourcesUpdater);
+} 
 
 const useSpace = <T extends HashedObject>(init: SpaceInit, broadcast?: boolean) => {
     const resources = usePeerResources();
@@ -59,53 +64,6 @@ const useSpace = <T extends HashedObject>(init: SpaceInit, broadcast?: boolean) 
 
 };
 
-const useStateObjectByHash = (hash: Hash) => {
-    const resources = usePeerResources();
-    const [stateObject, setSateObject] = useState<HashedObject | undefined> (undefined);
-
-    useEffect(() => {
-
-        let destroyed = false;
-
-        let stateObj: HashedObject | undefined;
-        let mutCallback = (mut: MutationOp) => {
-            if (stateObj !== undefined) {
-                setSateObject(stateObj);
-            }
-        }
-        resources.store?.load(hash).then((obj: HashedObject|undefined) => {
-            stateObj = obj;
-            if (obj instanceof MutableObject) {
-                if (!destroyed) {
-
-                    obj.watchForChanges(true);
-                    obj.loadAllChanges();
-
-                    setSateObject(obj);
-                    
-                    obj.addMutationCallback(mutCallback);
-                }
-                
-                
-            }
-            
-        });
-
-        return () => {
-            destroyed = true;
-
-            if (stateObj !== undefined && stateObj instanceof MutableObject) {
-                stateObj.watchForChanges(false);
-                stateObj.deleteMutationCallback(mutCallback);
-            }
-
-        }
-    });
-
-    return stateObject;
-
-};
-
 class StateObject<T extends HashedObject> {
 
     value?: T;
@@ -115,45 +73,113 @@ class StateObject<T extends HashedObject> {
     }
 }
 
-const useStateObject = <T extends HashedObject>(obj?: T) => {
+const useStateObjectByHash = <T extends HashedObject>(hash?: Hash) => {
 
-    const [stateObject, setSateObject] = useState<StateObject<T> | undefined> (new StateObject(obj));
+    const resources = usePeerResources();
+    const [stateObject, setSateObject] = useState<StateObject<T> | undefined> (undefined);
 
     useEffect(() => {
 
-        let mutCallback = (mut: MutationOp) => {
-            console.log('changed state for ' + obj?.hash() + '!')
-            setSateObject(new StateObject(obj));
-        }
-
         let destroyed = false;
+        let obj: T | undefined = undefined;
 
-        if (obj !== undefined && obj instanceof MutableObject) {
-            
-            obj.watchForChanges(true);
-            obj.loadAllChanges().then(() => {
-                if (!destroyed) {
-                    console.log('sate loaded for ' + obj.hash() + '!');
-                    setSateObject(new StateObject(obj));
-                    obj.addMutationCallback(mutCallback);    
+        let mutCallback = (mut: MutationOp) => {
+            if (obj !== undefined) {
+                setSateObject(new StateObject(obj));
+            }
+        };
+
+        if (hash !== undefined) {
+            resources.store?.load(hash).then((obj: T|undefined) => {
+                if (obj !== undefined && obj instanceof MutableObject) {
+                    
+                    obj.watchForChanges(true);
+                    obj.loadAllChanges().then(() => {
+                        if (!destroyed) {
+                            setSateObject(new StateObject(obj));
+                            obj.addMutationCallback(mutCallback);    
+                        }
+                    });
                 }
             });
         }
+
 
         return () => {
 
             destroyed = true;
 
-            if (obj !== undefined && obj instanceof MutableObject) {
+            if (hash !== undefined && obj !== undefined && obj instanceof MutableObject) {
                 obj.watchForChanges(false);
                 obj.deleteMutationCallback(mutCallback);
             }  
         };
-    }, [obj]);
+    }, [resources, hash]);
 
     return stateObject;
 
  };
 
 
-export { PeerResources, usePeerResources, useSpace, useStateObject, useStateObjectByHash };
+const useStateObject = <T extends HashedObject>(objOrPromise?: T | Promise<T | undefined>) => {
+
+    const init = objOrPromise instanceof HashedObject? objOrPromise : undefined;
+    const [stateObject, setSateObject] = useState<StateObject<T> | undefined> (new StateObject(init));
+
+    useEffect(() => {
+
+        let prom: Promise<T | undefined> | undefined;
+
+        if (objOrPromise instanceof Promise) {
+            prom = objOrPromise;
+        } else if (objOrPromise !== undefined) {
+            prom = Promise.resolve(objOrPromise);
+        } else {
+            prom = undefined;
+        }
+
+        let loadedObj: T | undefined;
+
+        let destroyed = false;
+        let mutCallback = (mut: MutationOp) => {
+            setSateObject(new StateObject(loadedObj));
+        }
+
+        
+
+        prom?.then(obj => {
+
+            loadedObj = obj;
+
+            if (obj !== undefined && obj instanceof MutableObject) {
+                
+                obj.watchForChanges(true);
+                obj.loadAllChanges().then(() => {
+                    if (!destroyed) {
+                        console.log('sate loaded for ' + obj.hash() + '!');
+                        setSateObject(new StateObject(obj));
+                        obj.addMutationCallback(mutCallback);    
+                    }
+                });
+            }
+    
+        });
+
+
+        return () => {
+
+            destroyed = true;
+
+            if (loadedObj !== undefined && loadedObj instanceof MutableObject) {
+                loadedObj.watchForChanges(false);
+                loadedObj.deleteMutationCallback(mutCallback);
+            }  
+        };
+    }, [objOrPromise]);
+
+    return stateObject;
+
+ };
+
+
+export { PeerResources, usePeerResources, PeerResourcesUpdater, usePeerResourcesUpdater, useSpace, useStateObject, useStateObjectByHash };

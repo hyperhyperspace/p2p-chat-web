@@ -1,21 +1,27 @@
 
-//TODO use hash of msg for key
-
-import { MutableSet } from "@hyper-hyper-space/core";
-import { ChatMessage } from "@hyper-hyper-space/p2p-chat";
+import { MutableSet } from '@hyper-hyper-space/core';
+import { ChatMessage } from '@hyper-hyper-space/p2p-chat';
+import { useEffect, useRef } from 'react';
 
 function MessageLog(props: {messages?: MutableSet<ChatMessage>}) {
-    
+
+    const divRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        divRef.current?.scrollIntoView({ behavior: 'smooth' });
+    });
+
     if (props.messages === undefined) {
         return <div>loading...</div>;
     } else {
         return (
-            <div className="dark cool black text-margin-bottom overflow-scroll" style={{height: '70%'}}>
-                <div className="serif no-margins padding responsive ">
+            <div className="dark cool black text-margin-bottom overflow-scroll" style={{height: '99%'}}>
+                <div className="monospace no-margins padding responsive ">
                     {Array.from(props.messages.values()).map((msg:ChatMessage) => (
                         <p key={msg.hash()}><strong>{msg.getAuthor()?.info?.name}:</strong> {msg.text}</p>
                     ))}
                 </div>
+                <div ref={divRef}></div>
             </div>
         );
     }

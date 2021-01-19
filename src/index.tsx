@@ -4,12 +4,9 @@ import './index.css';
 import ChatView from './ChatView';
 import reportWebVitals from './reportWebVitals';
 
-import { PeerResources } from './hhs-react-hooks';
-import { Resources, StateGossipAgent } from '@hyper-hyper-space/core';
-
-import { ObjectDiscoveryAgent } from '@hyper-hyper-space/core';
-
-import { } from '@hyper-hyper-space/p2p-chat';
+import { IdbBackend, Resources, StateGossipAgent, Store, ObjectDiscoveryAgent, MemoryBackend } from '@hyper-hyper-space/core';
+import { ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
+import PeerComponent from './PeerComponent';
 
 /*const chat = [['new2css', "okay but what if"],
               ['new2css', "i never use the inner-text-width class?"],
@@ -22,30 +19,69 @@ const props = {messages: chat.map((m:Array<string>) => ({author: m[0], text: m[1
               inactive: ['byzan10', 'johnnee']}*/
 
 
+const main = async () => {
+  let defaultResources: Resources = new Resources();
 
-let resources: Resources = new Resources();
+  console.log(defaultResources);
 
-console.log(resources);
+  console.log(ObjectDiscoveryAgent.log.level);
 
-console.log(ObjectDiscoveryAgent.log.level);
+  ObjectDiscoveryAgent.log.level = 5;
+  StateGossipAgent.controlLog.level = 5;
+  StateGossipAgent.peerMessageLog.level = 5;
 
-ObjectDiscoveryAgent.log.level = 2;
-StateGossipAgent.controlLog.level = 0;
-StateGossipAgent.peerMessageLog.level = 2;
+  console.log(ObjectDiscoveryAgent.log.level);
 
-console.log(ObjectDiscoveryAgent.log.level);
 
-ReactDOM.render(
-  <React.StrictMode>
-    <PeerResources.Provider value={resources}>
-      <ChatView init={{wordCode: ['thwart', 'boxer', 'episode'], wordCodeLang: 'en'}} />
-    </PeerResources.Provider>
-  </React.StrictMode>,
+  const location = window.location.hash.substr(2);
+  const [lang, words] = location.split('/');
+  const wordCode = words !== undefined? words.split('-') : undefined;
 
-  document.getElementById('root')
-);
+  const chatConfigStore = new Store(new IdbBackend('chat-config'));
+  //const wordCode = ['eggplant', 'erosion', 'absolute'];
+  const wordCodeLang = 'en';
+  const chatRoomConfig = new ChatRoomConfig(wordCode, wordCodeLang);
+
+  await chatConfigStore.save(chatRoomConfig); // this will bind it to the store
+  
+  // the following two should be unnecessary after the next hhs-core release:
+  chatRoomConfig.authorIdentity?.setStore(chatConfigStore);
+  chatRoomConfig.archiveLocally?.setStore(chatConfigStore);
+
+  await chatRoomConfig.authorIdentity?.loadAllChanges();
+  await chatRoomConfig.archiveLocally?.loadAllChanges();
+
+  const chatRoomName = wordCode !== undefined? wordCode.join('-') + '/' + wordCodeLang : undefined;
+
+  const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
+                      new Store(new IdbBackend(chatRoomName + '-store')) :
+                      new Store(new MemoryBackend(chatRoomName + '-mem'));
+
+  const authorId = chatRoomConfig.authorIdentity?.getValue();
+
+  console.log(authorId);
+
+  const resources = new Resources({store: chatStore, config: {id: authorId}});
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <PeerComponent resources={resources}>
+        { chatRoomName && 
+          <ChatView chatRoomName={chatRoomName} chatRoomConfig={chatRoomConfig} init={{wordCode: wordCode, wordCodeLang: wordCodeLang}} />
+        }
+        { !chatRoomName && 
+          <div> No chat room name specified, use the format #!/en/pineapple-super-great </div>
+        }
+      </PeerComponent>
+    </React.StrictMode>,
+
+    document.getElementById('root')
+  );
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals(console.log);
+
+main();

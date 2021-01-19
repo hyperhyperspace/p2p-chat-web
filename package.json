@@ -1,10 +1,10 @@
 {
   "name": "p2p-chat-web",
-  "version": "0.1.0",
+  "version": "0.0.3",
   "private": false,
   "dependencies": {
-    "@hyper-hyper-space/p2p-chat": "0.0.1",
-    "@hyper-hyper-space/core": "0.5.2",
+    "@hyper-hyper-space/core": "0.6.1",
+    "@hyper-hyper-space/p2p-chat": "0.0.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",

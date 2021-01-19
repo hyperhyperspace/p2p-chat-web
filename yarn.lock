@@ -1196,10 +1196,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hyper-hyper-space/core@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@hyper-hyper-space/core/-/core-0.5.2.tgz#dab73582a999b637ba2fe3162740002c244cc357"
-  integrity sha512-/DYPnrqNwG8jbUIjwgVCRUj++HSKdAds+X8Z/FBqK9GH8eS6SJr5awCUwx5cOMOB71LJ+EFK7S6fZsKHqIhy/Q==
+"@hyper-hyper-space/core@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@hyper-hyper-space/core/-/core-0.6.1.tgz#9be61a4bf80514bb3bd77a0889cf68e5b10a93ab"
+  integrity sha512-2O2Cx1VO1VjP+nI6A8ra+e6vZBEcPNQJ2TV4Nz/hj9EMAatAnlwA9mjKU0nXgoPkXpD9wZej7SQUO6B4NDT7jg==
   dependencies:
     "@types/node" "^14.0.13"
     chacha-js "^2.1.1"
@@ -1209,10 +1209,10 @@
     jshashes "^1.0.8"
     tslib "^2.0.1"
 
-"@hyper-hyper-space/p2p-chat@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@hyper-hyper-space/p2p-chat/-/p2p-chat-0.0.1.tgz#176406b7790f6f268799647acce0b49130f06bf6"
-  integrity sha512-+9HI5hbsKopfiyfwCHc/B2ZuXRE35rTdssbA8JX12EQ/0wm7wueZUiexWwS9gW6XOFzmJuCUk2tb0jNk0Z9r9Q==
+"@hyper-hyper-space/p2p-chat@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@hyper-hyper-space/p2p-chat/-/p2p-chat-0.0.5.tgz#295051d9c55b8260411f1a4cb0e7e65fe95ca98d"
+  integrity sha512-kOf6D1avVvrNaPMGqPNETr4PFo6XsKmvBy8UgdUqRQ1o94xPutN/xipbIYUyDGpub2OSvcSr7Enn9P6SVn8Unw==
   dependencies:
     tslib "^2.0.1"
 
