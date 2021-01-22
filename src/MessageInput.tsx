@@ -42,7 +42,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
 
         setJoinModalShown(false);
 
-        doSendMessage(await resources.store.load(id.hash()));
+        doSendMessage(await resources.store.load(id.hash()) as Identity);
     }
 
     const doCancel = () => {

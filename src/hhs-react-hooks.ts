@@ -90,13 +90,13 @@ const useStateObjectByHash = <T extends HashedObject>(hash?: Hash) => {
         };
 
         if (hash !== undefined) {
-            resources.store?.load(hash).then((obj: T|undefined) => {
+            resources.store?.load(hash).then((obj: HashedObject|undefined) => {
                 if (obj !== undefined && obj instanceof MutableObject) {
                     
                     obj.watchForChanges(true);
                     obj.loadAllChanges().then(() => {
                         if (!destroyed) {
-                            setSateObject(new StateObject(obj));
+                            setSateObject(new StateObject(obj as any as T));
                             obj.addMutationCallback(mutCallback);    
                         }
                     });
