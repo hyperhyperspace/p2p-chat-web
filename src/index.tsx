@@ -6,17 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { IdbBackend, Resources, StateGossipAgent, Store, ObjectDiscoveryAgent, MemoryBackend } from '@hyper-hyper-space/core';
 import { ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
-import PeerComponent from './PeerComponent';
-
-/*const chat = [['new2css', "okay but what if"],
-              ['new2css', "i never use the inner-text-width class?"],
-              ['new2css', "but my CSS still has it?"],
-              ['tenfourover', "it's fine. it'll be fine."],
-              ['new2css', "but it's wasted bandwidth"]]
-
-const props = {messages: chat.map((m:Array<string>) => ({author: m[0], text: m[1] })),
-              active: ['new2css', 'tenfourover'],
-              inactive: ['byzan10', 'johnnee']}*/
+import { PeerComponent } from '@hyper-hyper-space/react';
 
 
 const main = async () => {

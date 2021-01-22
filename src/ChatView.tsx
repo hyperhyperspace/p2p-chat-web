@@ -6,7 +6,7 @@ import MessageInput from './MessageInput';
 
 import './ChatView.css';
 import { Identity, SpaceInit, Store } from '@hyper-hyper-space/core';
-import { useStateObject, useSpace, usePeerResources } from './hhs-react-hooks';
+import { useStateObject, useSpace, usePeerResources } from '@hyper-hyper-space/react';
 import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 
 function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatRoomName: string}) {

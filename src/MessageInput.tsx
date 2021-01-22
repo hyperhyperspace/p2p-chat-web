@@ -1,7 +1,7 @@
 import { HashedObject, Identity, RSAKeyPair } from '@hyper-hyper-space/core';
 import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 import { useState } from 'react';
-import { usePeerResources, useStateObject } from './hhs-react-hooks';
+import { usePeerResources, useStateObject } from '@hyper-hyper-space/react';
 
 function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
 
