@@ -67,6 +67,13 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
         }
     }
 
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            doSendMessage();
+        }
+    }
+
     const sendMessage = () => {
 
         doSendMessage();
@@ -101,7 +108,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
                 </div>
             }
             <div className="grid grid-gap-text-padding no-margin-bottom">
-                <input type="text" value={currentText} onChange={handleTextChange} className="grid-width-nine monospace" />
+                <input type="text" value={currentText} onKeyPress={handleKeyPress} onChange={handleTextChange} className="grid-width-nine monospace" />
                 <button onClick={sendMessage} className="grid-width-three bright action monospace">Send</button>
             </div>
         </div>
