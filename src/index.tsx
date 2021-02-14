@@ -4,23 +4,25 @@ import './index.css';
 import ChatView from './ChatView';
 import reportWebVitals from './reportWebVitals';
 
-import { IdbBackend, Resources, StateGossipAgent, Store, ObjectDiscoveryAgent, MemoryBackend } from '@hyper-hyper-space/core';
+import { IdbBackend, Resources, StateGossipAgent, Store, ObjectDiscoveryAgent, MemoryBackend, PeerGroupAgent } from '@hyper-hyper-space/core';
 import { ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 import { PeerComponent } from '@hyper-hyper-space/react';
 
+import { WebWorkerMeshProxy } from '@hyper-hyper-space/core';
+
+/* eslint-disable-next-line import/no-webpack-loader-syntax */
+import WebWorker from 'worker-loader!./mesh.worker'
+
+//import { WebWorkerMesh } from '@hyper-hyper-space/webworker';
 
 const main = async () => {
-  let defaultResources: Resources = new Resources();
 
-  console.log(defaultResources);
-
-  console.log(ObjectDiscoveryAgent.log.level);
 
   ObjectDiscoveryAgent.log.level = 5;
   StateGossipAgent.controlLog.level = 5;
   StateGossipAgent.peerMessageLog.level = 5;
 
-  console.log(ObjectDiscoveryAgent.log.level);
+  PeerGroupAgent.controlLog.level = 0;
 
 
   const location = window.location.hash.substr(2);
@@ -42,15 +44,20 @@ const main = async () => {
 
   const chatRoomName = wordCode !== undefined? wordCode.join('-') + '/' + wordCodeLang : undefined;
 
-  const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
+  /*const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
                       new Store(new IdbBackend(chatRoomName + '-store')) :
-                      new Store(new MemoryBackend(chatRoomName + '-mem'));
+                      new Store(new MemoryBackend(chatRoomName + '-mem'));*/
+
+  const chatStore = new Store(new IdbBackend(chatRoomName + '-store'));
 
   const authorId = chatRoomConfig.authorIdentity?.getValue();
 
   console.log(authorId);
 
-  const resources = new Resources({store: chatStore, config: {id: authorId}});
+
+  const worker = new WebWorker();
+  const webWorkerMesh = new WebWorkerMeshProxy(worker);
+  const resources = new Resources({mesh: webWorkerMesh.getMesh(), store: chatStore, config: {id: authorId}});
 
   ReactDOM.render(
     <React.StrictMode>
