@@ -44,11 +44,11 @@ const main = async () => {
 
   const chatRoomName = wordCode !== undefined? wordCode.join('-') + '/' + wordCodeLang : undefined;
 
-  /*const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
+  const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
                       new Store(new IdbBackend(chatRoomName + '-store')) :
-                      new Store(new MemoryBackend(chatRoomName + '-mem'));*/
+                      new Store(new MemoryBackend(chatRoomName + '-mem'));
 
-  const chatStore = new Store(new IdbBackend(chatRoomName + '-store'));
+  //const chatStore = new Store(new IdbBackend(chatRoomName + '-store'));
 
   const authorId = chatRoomConfig.authorIdentity?.getValue();
 
