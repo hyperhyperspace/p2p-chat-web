@@ -18,7 +18,7 @@ function MessageLog(props: {messages?: MutableSet<ChatMessage>}) {
             <div className="dark cool black text-margin-bottom overflow-scroll" style={{height: '99%'}}>
                 <div className="monospace no-margins padding responsive ">
                     {Array.from(props.messages.values()).map((msg:ChatMessage) => (
-                        <p key={msg.hash()}><strong>{msg.getAuthor()?.info?.name}:</strong> {msg.text}</p>
+                        <p key={msg.getLastHash()}><strong>{msg.getAuthor()?.info?.name}:</strong> {msg.text}</p>
                     ))}
                 </div>
                 <div ref={divRef}></div>
