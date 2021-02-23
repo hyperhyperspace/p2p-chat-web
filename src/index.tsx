@@ -4,11 +4,13 @@ import './index.css';
 import ChatView from './ChatView';
 import reportWebVitals from './reportWebVitals';
 
-import { IdbBackend, Resources, StateGossipAgent, Store, ObjectDiscoveryAgent, MemoryBackend, PeerGroupAgent } from '@hyper-hyper-space/core';
+import { IdbBackend, Resources, StateGossipAgent, Store, ObjectDiscoveryAgent, MemoryBackend, PeerGroupAgent, TerminalOpsSyncAgent, WorkerSafeIdbBackend } from '@hyper-hyper-space/core';
 import { ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 import { PeerComponent } from '@hyper-hyper-space/react';
 
 import { WebWorkerMeshProxy } from '@hyper-hyper-space/core';
+
+import { Mesh } from '@hyper-hyper-space/core';
 
 /* eslint-disable-next-line import/no-webpack-loader-syntax */
 import WebWorker from 'worker-loader!./mesh.worker'
@@ -19,10 +21,14 @@ const main = async () => {
 
 
   ObjectDiscoveryAgent.log.level = 5;
-  StateGossipAgent.controlLog.level = 5;
-  StateGossipAgent.peerMessageLog.level = 5;
 
-  PeerGroupAgent.controlLog.level = 0;
+  PeerGroupAgent.controlLog.level = 5;
+
+  TerminalOpsSyncAgent.controlLog.level = 1;
+  TerminalOpsSyncAgent.opTransferLog.level = 1;
+  TerminalOpsSyncAgent.peerMessageLog.level = 1;
+  StateGossipAgent.controlLog.level = 1;
+  StateGossipAgent.peerMessageLog.level = 1;
 
 
   const location = window.location.hash.substr(2);
@@ -44,11 +50,11 @@ const main = async () => {
 
   const chatRoomName = wordCode !== undefined? wordCode.join('-') + '/' + wordCodeLang : undefined;
 
-  const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
+  /*const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
                       new Store(new IdbBackend(chatRoomName + '-store')) :
-                      new Store(new MemoryBackend(chatRoomName + '-mem'));
+                      new Store(new MemoryBackend(chatRoomName + '-mem'));*/
 
-  //const chatStore = new Store(new IdbBackend(chatRoomName + '-store'));
+  const chatStore = new Store(new WorkerSafeIdbBackend(chatRoomName + '-store'));
 
   const authorId = chatRoomConfig.authorIdentity?.getValue();
 
@@ -57,6 +63,7 @@ const main = async () => {
 
   const worker = new WebWorker();
   const webWorkerMesh = new WebWorkerMeshProxy(worker);
+  console.log(new Mesh());
   const resources = new Resources({mesh: webWorkerMesh.getMesh(), store: chatStore, config: {id: authorId}});
 
   ReactDOM.render(
@@ -78,6 +85,6 @@ const main = async () => {
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log);
+//reportWebVitals(console.log);
 
 main();
