@@ -1,6 +1,6 @@
-import { HashedObject, Identity, RSAKeyPair } from '@hyper-hyper-space/core';
+import { Identity, RSAKeyPair } from '@hyper-hyper-space/core';
 import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
-import { useState } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { usePeerResources, useStateObject } from '@hyper-hyper-space/react';
 
 function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
@@ -80,6 +80,20 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
 
     }
 
+    const messageInput = useRef<HTMLInputElement>(null);
+    const nameInput = useRef<HTMLInputElement>(null);
+
+    useLayoutEffect(() => {
+        if (messageInput.current !== null && !joinModalShown) {
+            messageInput.current.focus();
+        }
+
+        if (nameInput.current !== null && joinModalShown) {
+            nameInput.current.focus();
+        }
+        
+    }, [joinModalShown]);
+
     return (
         <div className="padding-top padding-bottom">
             {authorReference?.value?.getValue() === undefined && joinModalShown && 
@@ -90,7 +104,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
                         </h6>
                         <form>
                             <span className="monospace" >Your name:</span>
-                            <input className="light white monospace" value={currentName} onChange={handleNameChange} style={{width: '100%', textAlign: 'center'}}type="text"></input>
+                            <input ref={nameInput} className="light white monospace" value={currentName} onChange={handleNameChange} style={{width: '100%', textAlign: 'center'}}type="text"></input>
                             
                             {!creatingUser && 
                                 <div className="text-center padding-top">
@@ -100,7 +114,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
                             }
                            {creatingUser &&
                             <div className="padding-top text-center">
-                                <div className="dark cool black text-crunch small padding monospace">Please hold on whle your computer joins Hyper Hyper Space, {currentName}.</div>
+                                <div className="dark cool black text-crunch small padding monospace">Please hold on while your computer joins Hyper Hyper Space, {currentName}.</div>
                             </div>
                            } 
                         </form>
@@ -108,7 +122,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
                 </div>
             }
             <div className="grid grid-gap-text-padding no-margin-bottom">
-                <input type="text" value={currentText} onKeyPress={handleKeyPress} onChange={handleTextChange} className="grid-width-nine monospace" />
+                <input ref={messageInput} type="text" value={currentText} onKeyPress={handleKeyPress} onChange={handleTextChange} className="grid-width-nine monospace" />
                 <button onClick={sendMessage} className="grid-width-three bright action monospace">Send</button>
             </div>
         </div>
