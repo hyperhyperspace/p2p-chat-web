@@ -77,7 +77,7 @@ const main = async () => {
                              // so we'll wait here until we get the 'go' message from the MeshHost.
 
   console.log(new Mesh());
-  const resources = new Resources({mesh: webWorkerMesh.getMesh(), store: chatStore, config: {id: authorId}});
+  const resources = await Resources.create({mesh: webWorkerMesh.getMesh(), store: chatStore, config: {id: authorId}});
 
   ReactDOM.render(
     <React.StrictMode>
