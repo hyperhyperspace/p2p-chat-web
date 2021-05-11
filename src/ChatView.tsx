@@ -25,7 +25,7 @@ function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatR
   } else {
       return (
         <div id="chatView" className="tablet overlay no-margins padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
-          <MessageLog messages={messages} />
+          <MessageLog messages={messages} chatRoomConfig={props.chatRoomConfig} />
           <MessageInput room={entry} chatRoomConfig={props.chatRoomConfig}/>
         </div>
       );

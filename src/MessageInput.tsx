@@ -5,6 +5,9 @@ import { usePeerResources, useStateObject } from '@hyper-hyper-space/react';
 
 function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
 
+
+    const isIframe: boolean = window.top !== window.self;
+
     const resources = usePeerResources();
 
     const [currentText, setCurrentText] = useState('');
@@ -63,6 +66,10 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
             } else {
                 room.value?.say(author, currentText);
                 setCurrentText('');
+
+                if (messageInput.current !== null && isIframe) {
+                    messageInput.current.focus();                    
+                }
             }
         }
     }
@@ -83,16 +90,20 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
     const messageInput = useRef<HTMLInputElement>(null);
     const nameInput = useRef<HTMLInputElement>(null);
 
-    useLayoutEffect(() => {
-        if (messageInput.current !== null && !joinModalShown) {
-            messageInput.current.focus();
-        }
 
-        if (nameInput.current !== null && joinModalShown) {
-            nameInput.current.focus();
-        }
+    useLayoutEffect(() => {
+
+            if (messageInput.current !== null && !isIframe && !joinModalShown) {
+                messageInput.current.focus();
+            }
+
+            if (nameInput.current !== null && joinModalShown) {
+                nameInput.current.focus();
+            }
+
         
     }, [joinModalShown]);
+
 
     return (
         <div className="padding-top padding-bottom">
