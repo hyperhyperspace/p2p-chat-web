@@ -5,10 +5,6 @@ import { usePeerResources, useStateObject } from '@hyper-hyper-space/react';
 
 function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
 
-    console.log('chatRoomConfig');
-    console.log(props.chatRoomConfig)
-
-
     const isIframe: boolean = window.top !== window.self;
 
     const resources = usePeerResources();

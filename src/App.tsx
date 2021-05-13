@@ -16,11 +16,6 @@ function App(props: {resources: Resources}) {
         //const wordCode = ['eggplant', 'erosion', 'absolute'];
         const newChatRoomConfig = new ChatRoomConfig(newWordCode, newWordCodeLang);
 
-        console.log('TRULALA')
-        console.log(newChatRoomConfig.authorIdentity)
-        console.log(wordCode);
-
-
         await props.resources.store.save(newChatRoomConfig); // this will bind it to the store
         
         // the following two should be unnecessary after the next hhs-core release:

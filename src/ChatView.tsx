@@ -16,7 +16,10 @@ function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatR
   //let topic = useStateObject(entry?.topic);
   //entry?.messages?.setResources(resources);
   const messages = useStateObject(entry?.messages)?.value;
+  const topic    = useStateObject(entry?.topic)?.value;
   
+  console.log('topic is:')
+  console.log(topic)
 
 
   if (entry === undefined) {
@@ -26,7 +29,7 @@ function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatR
   } else {
       return (
         <div id="chatView" className="tablet overlay no-margin-top no-margin-bottom no-margin-left no-margin-right padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
-          <ChatHeader lookupChat={props.lookupChat} resources={props.resources} />
+          <ChatHeader topic={topic} lookupChat={props.lookupChat} resources={props.resources} />
           <MessageLog messages={messages} chatRoomConfig={props.chatRoomConfig} />
           <MessageInput room={entry} chatRoomConfig={props.chatRoomConfig}/>
         </div>

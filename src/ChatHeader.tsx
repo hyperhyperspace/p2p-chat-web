@@ -1,13 +1,12 @@
-import { HashedObject, MutableReference, Resources, Space, SpaceEntryPoint } from "@hyper-hyper-space/core";
+import { HashedLiteral, HashedObject, MutableReference, Resources, Space, SpaceEntryPoint } from "@hyper-hyper-space/core";
 import { ChatRoom } from "@hyper-hyper-space/p2p-chat";
-import { useStateObject } from "@hyper-hyper-space/react";
 import React, { useRef, useState } from "react";
 
-function ChatHeader(props: {room?: ChatRoom, resources: Resources, lookupChat: () => void}) {
+function ChatHeader(props: {topic?: MutableReference<HashedLiteral> | undefined, resources: Resources, lookupChat: () => void}) {
 
     // Current chat state
 
-
+    const currentTopic = props.topic?.getValue()?.value as string;
 
     // Create chat dialog state
 
@@ -55,7 +54,7 @@ function ChatHeader(props: {room?: ChatRoom, resources: Resources, lookupChat: (
     return  <React.Fragment>
                 <div className="grid border monospace text-padding dark primary">
                     <div className="grid-width-nine">
-                        <span>Hyper Hyper Space Lounge</span>
+                        <span>{currentTopic}</span>
                         <button className="margin-left blue dim dark cool info text-crunch small monospace">Rename</button> <button className="blue dim dark cool text-crunch small monospace">Embed</button> <button className="dark cool success text-crunch small monospace">Share</button>
                     </div>
                     <div className="grid-width-three text-right">
