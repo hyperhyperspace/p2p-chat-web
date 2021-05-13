@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import ChatView from './ChatView';
@@ -13,7 +13,8 @@ import { WebWorkerMeshProxy } from '@hyper-hyper-space/core';
 import { Mesh } from '@hyper-hyper-space/core';
 
 /* eslint-disable-next-line import/no-webpack-loader-syntax */
-import WebWorker from 'worker-loader!./mesh.worker'
+import WebWorker from 'worker-loader!./mesh.worker';
+import App from './App';
 
 //import { WebWorkerMesh } from '@hyper-hyper-space/webworker';
 
@@ -39,34 +40,14 @@ const main = async () => {
   WebWorkerMeshProxy.webRTCLogger.level = 5;
 
 
-  const location = window.location.hash.substr(2);
-  const [wordCodeLang, words] = location.split('/');
-  const wordCode = words !== undefined? words.split('-') : undefined;
-
-  const chatConfigStore = new Store(new IdbBackend('chat-config'));
-  //const wordCode = ['eggplant', 'erosion', 'absolute'];
-  const chatRoomConfig = new ChatRoomConfig(wordCode, wordCodeLang);
-
-  await chatConfigStore.save(chatRoomConfig); // this will bind it to the store
-  
-  // the following two should be unnecessary after the next hhs-core release:
-  chatRoomConfig.authorIdentity?.setStore(chatConfigStore);
-  chatRoomConfig.archiveLocally?.setStore(chatConfigStore);
-
-  await chatRoomConfig.authorIdentity?.loadAllChanges();
-  await chatRoomConfig.archiveLocally?.loadAllChanges();
-
-  const chatRoomName = wordCode !== undefined? wordCode.join('-') + '/' + wordCodeLang : undefined;
-
   /*const chatStore = chatRoomConfig.archiveLocally?.getValue()?.value ? 
                       new Store(new IdbBackend(chatRoomName + '-store')) :
                       new Store(new MemoryBackend(chatRoomName + '-mem'));*/
 
-  const chatStore = new Store(new WorkerSafeIdbBackend(chatRoomName + '-store'));
+  const chatStore = new Store(new WorkerSafeIdbBackend('chat-window-store'));
 
-  const authorId = chatRoomConfig.authorIdentity?.getValue();
 
-  console.log(authorId);
+
 
 
   const worker = new WebWorker();
@@ -77,18 +58,11 @@ const main = async () => {
                              // so we'll wait here until we get the 'go' message from the MeshHost.
 
   console.log(new Mesh());
-  const resources = await Resources.create({mesh: webWorkerMesh.getMesh(), store: chatStore, config: {id: authorId}});
+  const resources = await Resources.create({mesh: webWorkerMesh.getMesh(), store: chatStore});
 
   ReactDOM.render(
     <React.StrictMode>
-      <PeerComponent resources={resources}>
-        { chatRoomName && 
-          <ChatView chatRoomName={chatRoomName} chatRoomConfig={chatRoomConfig} init={{wordCode: wordCode, wordCodeLang: wordCodeLang}} />
-        }
-        { !chatRoomName && 
-          <div> No chat room name specified, use the format #/en/acre-cliff-busy </div>
-        }
-      </PeerComponent>
+      <App resources={resources}/>
     </React.StrictMode>,
 
     document.getElementById('root')

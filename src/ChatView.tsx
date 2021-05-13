@@ -5,11 +5,12 @@ import MessageLog from './MessageLog';
 import MessageInput from './MessageInput';
 
 import './ChatView.css';
-import { Identity, SpaceInit, Store } from '@hyper-hyper-space/core';
+import { Identity, Resources, SpaceInit, Store } from '@hyper-hyper-space/core';
 import { useStateObject, useSpace, usePeerResources } from '@hyper-hyper-space/react';
 import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
+import ChatHeader from './ChatHeader';
 
-function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatRoomName: string}) {
+function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatRoomName: string, lookupChat: () => void, resources: Resources}) {
   //const resources = usePeerResources();
   const entry = useSpace<ChatRoom>(props.init, true);
   //let topic = useStateObject(entry?.topic);
@@ -24,7 +25,8 @@ function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatR
     );
   } else {
       return (
-        <div id="chatView" className="tablet overlay no-margins padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
+        <div id="chatView" className="tablet overlay no-margin-top no-margin-bottom no-margin-left no-margin-right padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
+          <ChatHeader lookupChat={props.lookupChat} resources={props.resources} />
           <MessageLog messages={messages} chatRoomConfig={props.chatRoomConfig} />
           <MessageInput room={entry} chatRoomConfig={props.chatRoomConfig}/>
         </div>

@@ -5,6 +5,9 @@ import { usePeerResources, useStateObject } from '@hyper-hyper-space/react';
 
 function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
 
+    console.log('chatRoomConfig');
+    console.log(props.chatRoomConfig)
+
 
     const isIframe: boolean = window.top !== window.self;
 
@@ -39,6 +42,9 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
 
         await resources.store.save(kp.clone());
         await resources.store.save(id.clone());
+
+        console.log('setting value in')
+        console.log(props.chatRoomConfig?.authorIdentity)
 
         props.chatRoomConfig?.authorIdentity?.setValue(id);
         await props.chatRoomConfig?.authorIdentity?.saveQueuedOps();
@@ -120,6 +126,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
                             {!creatingUser && 
                                 <div className="text-center padding-top">
                                     <button onClick={doJoin} className="bright action margin-right monospace" >&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+                                    &nbsp;&nbsp;&nbsp;
                                     <button onClick={doCancel} className="monospace">Cancel</button>
                                 </div>
                             }
@@ -132,7 +139,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
                     </div>
                 </div>
             }
-            <div className="grid grid-gap-text-padding no-margin-bottom">
+            <div className="grid no-margin-bottom">
                 <input ref={messageInput} type="text" value={currentText} onKeyPress={handleKeyPress} onChange={handleTextChange} className="grid-width-nine monospace" />
                 <button onClick={sendMessage} className="grid-width-three bright action monospace">Send</button>
             </div>
