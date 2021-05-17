@@ -17,9 +17,17 @@ function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatR
   //entry?.messages?.setResources(resources);
   const messages = useStateObject(entry?.messages)?.value;
   const topic    = useStateObject(entry?.topic)?.value;
+
+  console.log('messages is:')
+  console.log(messages);
+  console.log('size:')
+  console.log(messages?.size())
   
   console.log('topic is:')
   console.log(topic)
+
+  console.log('topic value is:')
+  console.log(topic?._value);
 
 
   if (entry === undefined) {

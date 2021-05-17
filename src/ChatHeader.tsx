@@ -15,7 +15,6 @@ function ChatHeader(props: {topic?: MutableReference<HashedLiteral> | undefined,
     const [currentName, setCurrentName] = useState('');
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentName(event.target.value);
-        createChatRoom();
     };
 
     const [createDialogShown, setCreateDialogShown] = useState(false);
@@ -24,8 +23,8 @@ function ChatHeader(props: {topic?: MutableReference<HashedLiteral> | undefined,
     const [newRoom, setNewRoom] = useState<ChatRoom|undefined>(undefined);
 
 
-    const createChatRoom = async () => {
-        const room = new ChatRoom(currentName);
+    const createChatRoom = () => {
+        const room = new ChatRoom();
         setNewRoom(room);
     };
 
@@ -35,14 +34,13 @@ function ChatHeader(props: {topic?: MutableReference<HashedLiteral> | undefined,
         createChatRoom();
     };
 
-    const doCreateChatRoom = () => {
+    const doCreateChatRoom = async () => {
 
+        await newRoom?.topic?.setValue(new HashedLiteral(currentName));
+        await props.resources.store.save(newRoom?.topic as HashedObject);
         const space = Space.fromEntryPoint(newRoom as ChatRoom, props.resources);
-
-        space.entryPoint.then((entry: (HashedObject & SpaceEntryPoint)) => {
-            window.location.hash = '#/room/en/' + Space.getWordCodingFor(entry).join('-');
-            props.lookupChat();
-        });
+        window.location.hash = '#/room/en/' + Space.getWordCodingFor(await space.entryPoint).join('-');
+        props.lookupChat();
     };
     
     const cancelCreateChatRoom = () => {
