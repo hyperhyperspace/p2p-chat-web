@@ -10,39 +10,38 @@ import { useStateObject, useSpace, usePeerResources } from '@hyper-hyper-space/r
 import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 import ChatHeader from './ChatHeader';
 
-function ChatView(props: {init: SpaceInit, chatRoomConfig: ChatRoomConfig, chatRoomName: string, lookupChat: () => void, resources: Resources}) {
+function ChatView(props: {init?: SpaceInit, chatRoomConfig?: ChatRoomConfig, lookupChat: () => void, resources: Resources}) {
   //const resources = usePeerResources();
   const entry = useSpace<ChatRoom>(props.init, true);
   //let topic = useStateObject(entry?.topic);
   //entry?.messages?.setResources(resources);
   const messages = useStateObject(entry?.messages)?.value;
   const topic    = useStateObject(entry?.topic)?.value;
-
-  console.log('messages is:')
-  console.log(messages);
-  console.log('size:')
-  console.log(messages?.size())
   
-  console.log('topic is:')
-  console.log(topic)
 
-  console.log('topic value is:')
-  console.log(topic?._value);
+  const ready = entry !== undefined && props.chatRoomConfig !== undefined;
 
-
-  if (entry === undefined) {
-    return (
-      <div>connecting...</div>
-    );
-  } else {
-      return (
-        <div id="chatView" className="tablet overlay no-margin-top no-margin-bottom no-margin-left no-margin-right padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
-          <ChatHeader topic={topic} lookupChat={props.lookupChat} resources={props.resources} />
-          <MessageLog messages={messages} chatRoomConfig={props.chatRoomConfig} />
-          <MessageInput room={entry} chatRoomConfig={props.chatRoomConfig}/>
-        </div>
-      );
-  }
+  return (
+    <div id="chatView" className="tablet overlay no-margin-top no-margin-bottom no-margin-left no-margin-right padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
+      <ChatHeader showWelcome={props.init === undefined} room={entry} lookupChat={props.lookupChat} resources={props.resources} />
+      {props.init !== undefined  &&
+          
+      <React.Fragment>
+        {entry === undefined &&
+            <div>connecting...</div>        
+        }
+        {entry !== undefined &&
+          <React.Fragment>
+            <MessageLog messages={messages} chatRoomConfig={props.chatRoomConfig as ChatRoomConfig} />
+            <MessageInput room={entry} chatRoomConfig={props.chatRoomConfig}/>
+          </React.Fragment>
+        }
+        
+      </React.Fragment>
+      }
+      
+    </div>
+  );
 }
 
 /*

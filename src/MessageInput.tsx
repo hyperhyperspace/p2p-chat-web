@@ -3,7 +3,7 @@ import { ChatRoom, ChatRoomConfig } from '@hyper-hyper-space/p2p-chat';
 import { useState, useRef, useLayoutEffect } from 'react';
 import { usePeerResources, useStateObject } from '@hyper-hyper-space/react';
 
-function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
+function MessageInput(props: {room?: ChatRoom, chatRoomConfig?: ChatRoomConfig}) {
 
     const isIframe: boolean = window.top !== window.self;
 
@@ -19,7 +19,7 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
         setCurrentName(event.target.value);
     };
 
-    const room = useStateObject(props.room);
+    const room = props.room;
     
     const authorReference = useStateObject(props.chatRoomConfig?.authorIdentity);
 
@@ -61,16 +61,26 @@ function MessageInput(props: {room: ChatRoom, chatRoomConfig?: ChatRoomConfig}) 
             author = authorReference?.value?.getValue();
         }
 
+        console.log('author is');
+        console.log(author)
+
         if (room !== undefined) {
 
             if (author === undefined) {
+                setCurrentName('');
+                setCreatingUser(false);
                 setJoinModalShown(true);
             } else {
-                room.value?.say(author, currentText);
-                setCurrentText('');
 
-                if (messageInput.current !== null && isIframe) {
-                    messageInput.current.focus();                    
+                if (room === undefined) {
+                    alert('Please wait a second until the room is loaded...');
+                } else {
+                    room.say(author, currentText);
+                    setCurrentText('');
+    
+                    if (messageInput.current !== null && isIframe) {
+                        messageInput.current.focus();                    
+                    }
                 }
             }
         }
