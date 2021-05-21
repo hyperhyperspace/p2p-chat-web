@@ -21,11 +21,23 @@ function ChatView(props: {init?: SpaceInit, chatRoomConfig?: ChatRoomConfig, loo
 
   const ready = entry !== undefined && props.chatRoomConfig !== undefined;
 
+  let isIframe: boolean;
+
+  try {
+      isIframe = window.top !== window.self;
+  } catch (e) {
+      isIframe = true;
+  }
+
   return (
     <div id="chatView" className="tablet overlay no-margin-top no-margin-bottom no-margin-left no-margin-right padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
+      
+      { !isIframe &&
       <ChatHeader showWelcome={props.init === undefined} room={entry} lookupChat={props.lookupChat} resources={props.resources} />
+      }
       {props.init !== undefined  &&
-          
+        
+      
       <React.Fragment>
         {entry === undefined &&
             <div>connecting...</div>        

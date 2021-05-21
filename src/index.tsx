@@ -44,7 +44,18 @@ const main = async () => {
                       new Store(new IdbBackend(chatRoomName + '-store')) :
                       new Store(new MemoryBackend(chatRoomName + '-mem'));*/
 
-  const chatStore = new Store(new WorkerSafeIdbBackend('chat-window-store'));
+  const backend = new WorkerSafeIdbBackend('chat-window-store');
+  let dbBackendError: (string|undefined) = undefined;
+
+
+  try {
+    await backend.ready();
+  } catch (e) {
+    dbBackendError = e.toString();
+  }
+  
+
+  const chatStore = new Store(backend);
 
 
 
@@ -62,7 +73,24 @@ const main = async () => {
 
   ReactDOM.render(
     <React.StrictMode>
+      { dbBackendError === undefined && 
       <App resources={resources}/>
+      }
+      { dbBackendError !== undefined &&
+      <div className="modal transparent black">
+        <div className="card text-width margin-auto gutter">
+            <h6 className="monospace no-margin-top padding-bottom text-trim big">
+                Error initializing in-browser store
+            </h6>
+            <p className="monospace text-crunch small" >
+              <a href="https://www.hyperhyperspace.org">Hyper Hyper Space</a> couldn't create a store in your browser. This could be caused 
+              by running in <span className="red">incognito mode</span> in some browsers. Otherwise, you need to run 
+              a browser that supports IndexedDb, like the latest <a href="https://www.mozilla.org/en-US/firefox/">Firefox</a>,&nbsp;
+              <a href="https://www.google.com/chrome/">Chrome</a> or <a href="https://www.apple.com/safari/">Safari</a>.</p>
+        </div>
+      </div>
+  
+      }
     </React.StrictMode>,
 
     document.getElementById('root')
