@@ -258,7 +258,6 @@ function ChatHeader(props: {showWelcome?: boolean, room?: ChatRoom | undefined, 
     const wordCodeTag = wordCoding.join('-');
 
     const embedHTML =   "<iframe id=\"" + wordCodeTag +"\"\n" + 
-                        "        title=\"Inline Frame Example\"\n" +
                         "        width=\"100%\"\n" +
                         "        height=\"100%\"\n" +
                         "        src=\"https://hyperhyper.space/chat-window/?" + wordCodeTag + "#/en/" + wordCodeTag + "\">\n" +
