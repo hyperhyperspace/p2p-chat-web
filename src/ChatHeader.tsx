@@ -41,8 +41,8 @@ function ChatHeader(props: {showWelcome?: boolean, room?: ChatRoom | undefined, 
 
     const doCreateChatRoom = async () => {
 
-        await newRoom?.topic?.setValue(new HashedLiteral(currentName));
-        await props.resources.store.save(newRoom?.topic as HashedObject);
+        newRoom?.topic?.setValue(new HashedLiteral(currentName));
+        await props.resources.store.save(newRoom as HashedObject);
         const space = Space.fromEntryPoint(newRoom as ChatRoom, props.resources);
         setCreateDialogShown(false);
         window.location.hash = '#/room/en/' + Space.getWordCodingFor(await space.entryPoint).join('-');
