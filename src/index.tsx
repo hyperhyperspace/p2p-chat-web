@@ -49,7 +49,9 @@ const main = async () => {
 
 
   try {
+    console.log('Initializing storage backend...');
     await backend.ready();
+    console.log('Storage backend ready');
   } catch (e) {
     dbBackendError = e.toString();
   }
