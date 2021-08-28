@@ -1,7 +1,7 @@
 /* This project uses Cavepaint (MIT License) by Rex Riepe */
 /* https://github.com/cavepaint/cavepaintCSS */
 :root {
-    --font-size-base: 16px;
+    --font-size-base: 18px;
     --font-size-mod: 1;
     --font-family: var(--sans-serif);
     --line-height: 1.8;
@@ -13,14 +13,15 @@
     --gutter: calc(2 * var(--pad));
     --text-padding: 0.28em;
     --text-margin: var(--text-padding);
+    --text-indent: var(--text-padding);
     --text-border-radius: var(--text-padding);
     --text-shadow: var(--box-shadow);
     --gap: var(--pad);
     --grid-columns: 12;
     --golden: 1.618;
-    --h: 202.2;
-    --s: 78.5%;
-    --l: 97.8%;
+    --h: 194.9;
+    --s: 91.1%;
+    --l: 97.1%;
     --a: 0.2;
     --border-width: 1px;
     --border-style: solid;
@@ -41,43 +42,43 @@
     --box-shadow: var(--shadow-position) var(--shadow-position) var(--shadow-blur) var(--shadow-color);
     --shadow-position: 1px;
     --shadow-blur: 1px;
-    --shadow-color: rgba(12, 25, 33, 0.2);
+    --shadow-color: rgba(3, 26, 34, 0.2);
     --direction: 180deg;
-    --warm: rgba(211, 109.2, 124.1, var(--a));
-    --cool: rgba(14.7, 196.8, 200.3, var(--a));
-    --neutral: rgba(66.4, 117.7, 171.9, var(--a));
-    --dull: rgba(120.5, 120.5, 120.5, var(--a));
+    --warm: rgba(210.1, 99.4, 109.1, var(--a));
+    --cool: rgba(11.3, 196.7, 198.7, var(--a));
+    --neutral: rgba(38.1, 127.3, 190.4, var(--a));
+    --dull: rgba(112, 112, 112, var(--a));
     --monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "DejaVu Sans Mono", Courier, monospace;
     --serif: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "Droid Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
     --sans-serif: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
-    --ambient: #54b3ea;
-    --white: #f5fafe;
-    --black: #0c1921;
-    --red: #dd1c2b;
-    --orange: #f6a915;
-    --yellow: #f2ff1f;
-    --green: #2aac4e;
-    --teal: #2fadb1;
-    --cyan: #0df2f3;
-    --blue: #374efb;
-    --purple: #9635af;
-    --magenta: #d428eb;
-    --gray: #7c858b;
-    --base-color: #4277af;
-    --complement: #a97f52;
-    --accent: #414ab6;
-    --second-accent: #40b1b6;
-    --split: #a94ab4;
-    --second-split: #40b253;
-    --triad: #764ab6;
+    --ambient: #17bdf4;
+    --white: #f1fbfe;
+    --black: #031a22;
+    --red: #d61923;
+    --orange: #f4a70c;
+    --yellow: #eaff17;
+    --green: #28ab49;
+    --teal: #2facae;
+    --cyan: #0cf2f2;
+    --blue: #324efa;
+    --purple: #8d33ac;
+    --magenta: #c227eb;
+    --gray: #7b8386;
+    --base-color: #1e7ec2;
+    --complement: #ba6628;
+    --accent: #1d31c5;
+    --second-accent: #1dc3b7;
+    --split: #ad23c5;
+    --second-split: #2ac328;
+    --triad: #5e23c5;
     --second-triad: var(--complement);
-    --third-triad: #40b285;
-    --tetrad: #5c4ab6;
-    --second-tetrad: #a94a69;
-    --third-tetrad: #8db252;
-    --fourth-tetrad: #40b29e;
-    --action: #4277af;
-    --reaction: #745a3f;
+    --third-triad: #1dc369;
+    --tetrad: #3723c5;
+    --second-tetrad: #ba235d;
+    --third-tetrad: #a0c328;
+    --fourth-tetrad: #1dc390;
+    --action: #1e7ec2;
+    --reaction: #854b20;
     --info: var(--cyan);
     --warning: var(--orange);
     --success: var(--green);
@@ -163,6 +164,10 @@
   }
   p {
     margin-bottom: 1em;
+    text-indent: var(--text-indent);
+  }
+  p:only-of-type {
+    text-indent: 0;
   }
   img {
     max-width: 100%;
@@ -881,7 +886,7 @@
     line-height: 1;
   }
   .text-crunch {
-    line-height: calc((var(--line-height) + 1) * 0.5);
+    line-height: calc(var(--line-height) * 0.65);
   }
   .text-align-center,
   .text-center {
@@ -919,6 +924,7 @@
   }
   .shade,
   .white,
+  .light.red,
   .orange,
   .yellow,
   .green,
@@ -929,6 +935,7 @@
   .light.gray,
   .bright.gray,
   .light.base-color,
+  .bright.base-color,
   .light.complement,
   .bright.complement,
   .second.accent,
@@ -940,14 +947,18 @@
   .light.second.triad,
   .bright.second.triad,
   .light.action,
+  .bright.action,
   .light.primary,
+  .bright.primary,
   .light.reaction,
   .bright.reaction,
   .light.secondary,
   .bright.secondary,
   .light.info,
   .warning,
-  .success {
+  .success,
+  .light.failure,
+  .light.error {
     color: var(--black);
     background-color: hsl(var(--h), var(--s), var(--l));
     border-color: hsl(var(--border-h), var(--border-s), var(--border-l));
@@ -959,10 +970,12 @@
   .black,
   .red,
   .dark.orange,
+  .dim.orange,
   .dark.green,
   .dim.green,
   .dark.teal,
   .dim.teal,
+  .dark.cyan,
   .blue,
   .purple,
   .magenta,
@@ -991,6 +1004,7 @@
   .secondary,
   .info,
   .dark.warning,
+  .dim.warning,
   .dark.success,
   .dim.success,
   .failure,
@@ -1024,18 +1038,6 @@
   }
   .vertical {
     --direction: 90deg;
-  }
-  .trim {
-    margin-bottom: 0;
-  }
-  .trim-inner * {
-    margin-bottom: 0;
-  }
-  .trim-all {
-    margin-bottom: 0;
-  }
-  .trim-all * {
-    margin-bottom: 0;
   }
   .bump {
     position: relative;
@@ -1101,7 +1103,7 @@
     list-style-type: disc;
   }
   .text-indent {
-    text-indent: 2ch;
+    text-indent: var(--text-indent);
   }
   .text-justify {
     text-justify: justify;
@@ -1178,6 +1180,28 @@
   }
   .placeholder::after {
     content: " ";
+  }
+  .square::after,
+  .one-to-one::after,
+  .four-to-three::after,
+  .sixteen-to-nine::after,
+  .two-to-one::after {
+    content: "";
+    display: block;
+    width: 0;
+  }
+  .square::after,
+  .one-to-one::after {
+    padding-top: 100%;
+  }
+  .four-to-three::after {
+    padding-top: 75%;
+  }
+  .sixteen-to-nine::after {
+    padding-top: 56.25%;
+  }
+  .two-to-one::after {
+    padding-top: 50%;
   }
   .rem-width {
     width: 1rem;
@@ -1342,11 +1366,6 @@
   .no-gutter {
     margin: 0;
   }
-  .no-side-margin,
-  .no-side-margins {
-    margin-left: 0;
-    margin-right: 0;
-  }
   .no-margins {
     margin: 0;
   }
@@ -1409,6 +1428,9 @@
   .no-overflow * {
     overflow: hidden;
   }
+  .no-line-height {
+    line-height: 1;
+  }
   .no-text-indent {
     text-indent: 0;
   }
@@ -1448,525 +1470,573 @@
     column-gap: 0;
   }
   .white {
-    --h: 202.2;
-    --s: 78.5%;
-    --l: 97.8%;
+    --h: 194.9;
+    --s: 91.1%;
+    --l: 97.1%;
   }
   .light.white {
     --l: 100%;
   }
   .dark.white {
-    --l: 82.8%;
+    --l: 77.1%;
   }
   .bright.white {
     --s: 0%;
     --l: 100%;
   }
   .dim.white {
-    --s: 53.5%;
-    --l: 90.3%;
+    --s: 66.1%;
+    --l: 87.1%;
   }
   .black {
-    --h: 202.2;
-    --s: 47%;
-    --l: 8.8%;
+    --h: 194.9;
+    --s: 82.9%;
+    --l: 7.3%;
   }
   .light.black {
-    --l: 23.8%;
+    --l: 27.3%;
   }
   .dark.black {
     --l: 0%;
   }
   .bright.black {
-    --s: 72%;
-    --l: 16.3%;
+    --s: 100%;
+    --l: 17.3%;
   }
   .dim.black {
-    --s: 22%;
-    --l: 1.3%;
+    --s: 0%;
+    --l: 0%;
   }
   .red,
   .failure,
   .error {
-    --h: 355.3;
-    --s: 77.4%;
-    --l: 48.9%;
+    --h: 356.8;
+    --s: 78.8%;
+    --l: 46.9%;
   }
   .light.red,
   .light.failure,
   .light.error {
-    --l: 63.9%;
+    --l: 66.9%;
   }
   .dark.red,
   .dark.failure,
   .dark.error {
-    --l: 33.9%;
+    --l: 26.9%;
   }
   .bright.red,
   .bright.failure,
   .bright.error {
     --s: 100%;
-    --l: 56.4%;
+    --l: 56.9%;
   }
   .dim.red,
   .dim.failure,
   .dim.error {
-    --s: 52.4%;
-    --l: 41.4%;
+    --s: 53.8%;
+    --l: 36.9%;
   }
   .orange,
   .warning {
-    --h: 39.3;
-    --s: 92.8%;
-    --l: 52.5%;
+    --h: 40.1;
+    --s: 91.7%;
+    --l: 50.2%;
   }
   .light.orange,
   .light.warning {
-    --l: 67.5%;
+    --l: 70.2%;
   }
   .dark.orange,
   .dark.warning {
-    --l: 37.5%;
+    --l: 30.2%;
   }
   .bright.orange,
   .bright.warning {
     --s: 100%;
-    --l: 60%;
+    --l: 60.2%;
   }
   .dim.orange,
   .dim.warning {
-    --s: 67.8%;
-    --l: 45%;
+    --s: 66.7%;
+    --l: 40.2%;
   }
   .yellow {
-    --h: 63.3;
+    --h: 65.3;
     --s: 99.9%;
-    --l: 56.1%;
+    --l: 54.4%;
   }
   .light.yellow {
-    --l: 71.1%;
+    --l: 74.4%;
   }
   .dark.yellow {
-    --l: 41.1%;
+    --l: 34.4%;
   }
   .bright.yellow {
     --s: 100%;
-    --l: 63.6%;
+    --l: 64.4%;
   }
   .dim.yellow {
     --s: 74.9%;
-    --l: 48.6%;
+    --l: 44.4%;
   }
   .green,
   .success {
-    --h: 136.8;
-    --s: 60.6%;
-    --l: 41.9%;
+    --h: 135.1;
+    --s: 62.4%;
+    --l: 41.3%;
   }
   .light.green,
   .light.success {
-    --l: 56.9%;
+    --l: 61.3%;
   }
   .dark.green,
   .dark.success {
-    --l: 26.9%;
+    --l: 21.3%;
   }
   .bright.green,
   .bright.success {
-    --s: 85.6%;
-    --l: 49.4%;
+    --s: 87.4%;
+    --l: 51.3%;
   }
   .dim.green,
   .dim.success {
-    --s: 35.6%;
-    --l: 34.4%;
+    --s: 37.4%;
+    --l: 31.3%;
   }
   .teal {
-    --h: 181.7;
-    --s: 57.8%;
-    --l: 44%;
+    --h: 180.9;
+    --s: 57.5%;
+    --l: 43.3%;
   }
   .light.teal {
-    --l: 59%;
+    --l: 63.3%;
   }
   .dark.teal {
-    --l: 29%;
+    --l: 23.3%;
   }
   .bright.teal {
-    --s: 82.8%;
-    --l: 51.5%;
+    --s: 82.5%;
+    --l: 53.3%;
   }
   .dim.teal {
-    --s: 32.8%;
-    --l: 36.5%;
+    --s: 32.5%;
+    --l: 33.3%;
   }
   .cyan {
-    --h: 180.3;
-    --s: 90.4%;
-    --l: 50.2%;
+    --h: 180.2;
+    --s: 90.3%;
+    --l: 50%;
   }
   .light.cyan {
-    --l: 65.2%;
+    --l: 70%;
   }
   .dark.cyan {
-    --l: 35.2%;
+    --l: 30%;
   }
   .bright.cyan {
     --s: 100%;
-    --l: 57.7%;
+    --l: 60%;
   }
   .dim.cyan {
-    --s: 65.4%;
-    --l: 42.7%;
+    --s: 65.3%;
+    --l: 40%;
   }
   .blue,
   .info {
-    --h: 232.9;
+    --h: 231.7;
     --s: 95.7%;
-    --l: 59.9%;
+    --l: 59%;
   }
   .light.blue,
   .light.info {
-    --l: 74.9%;
+    --l: 79%;
   }
   .dark.blue,
   .dark.info {
-    --l: 44.9%;
+    --l: 39%;
   }
   .bright.blue,
   .bright.info {
     --s: 100%;
-    --l: 67.4%;
+    --l: 69%;
   }
   .dim.blue,
   .dim.info {
     --s: 70.7%;
-    --l: 52.4%;
+    --l: 49%;
   }
   .purple {
-    --h: 287.5;
-    --s: 53.6%;
-    --l: 44.7%;
+    --h: 284.3;
+    --s: 54.1%;
+    --l: 43.9%;
   }
   .light.purple {
-    --l: 59.7%;
+    --l: 63.9%;
   }
   .dark.purple {
-    --l: 29.7%;
+    --l: 23.9%;
   }
   .bright.purple {
-    --s: 78.6%;
-    --l: 52.2%;
-  }
-  .dim.purple {
-    --s: 28.6%;
-    --l: 37.2%;
-  }
-  .magenta {
-    --h: 292.9;
-    --s: 83.1%;
+    --s: 79.1%;
     --l: 53.9%;
   }
+  .dim.purple {
+    --s: 29.1%;
+    --l: 33.9%;
+  }
+  .magenta {
+    --h: 287.5;
+    --s: 82.7%;
+    --l: 53.7%;
+  }
   .light.magenta {
-    --l: 68.9%;
+    --l: 73.7%;
   }
   .dark.magenta {
-    --l: 38.9%;
+    --l: 33.7%;
   }
   .bright.magenta {
     --s: 100%;
-    --l: 61.4%;
+    --l: 63.7%;
   }
   .dim.magenta {
-    --s: 58.1%;
-    --l: 46.4%;
+    --s: 57.7%;
+    --l: 43.7%;
   }
   .gray {
-    --h: 202.2;
-    --s: 6%;
-    --l: 51.4%;
+    --h: 194.9;
+    --s: 4.3%;
+    --l: 50.3%;
   }
   .light.gray {
-    --l: 66.4%;
+    --l: 70.3%;
   }
   .dark.gray {
-    --l: 36.4%;
+    --l: 30.3%;
   }
   .bright.gray {
-    --s: 31%;
-    --l: 58.9%;
+    --s: 29.3%;
+    --l: 60.3%;
   }
   .dim.gray {
     --s: 0%;
-    --l: 43.9%;
+    --l: 40.3%;
   }
   .base-color,
   .action,
   .primary {
-    --h: 210.8;
-    --s: 45.2%;
-    --l: 47.3%;
+    --h: 204.9;
+    --s: 73.2%;
+    --l: 43.9%;
   }
   .light.base-color,
   .light.action,
   .light.primary {
-    --l: 62.3%;
+    --l: 63.9%;
   }
   .dark.base-color,
   .dark.action,
   .dark.primary {
-    --l: 32.3%;
+    --l: 23.9%;
   }
   .bright.base-color,
   .bright.action,
   .bright.primary {
-    --s: 70.2%;
-    --l: 54.8%;
+    --s: 98.2%;
+    --l: 53.9%;
   }
   .dim.base-color,
   .dim.action,
   .dim.primary {
-    --s: 20.2%;
-    --l: 39.8%;
+    --s: 48.2%;
+    --l: 33.9%;
   }
   .complement,
   .second.triad,
   .reaction,
   .secondary {
-    --h: 31.3;
-    --s: 34.8%;
-    --l: 49.2%;
+    --h: 25.3;
+    --s: 64.4%;
+    --l: 44.4%;
   }
   .light.complement,
   .light.second.triad,
   .light.reaction,
   .light.secondary {
-    --l: 64.2%;
+    --l: 64.4%;
   }
   .dark.complement,
   .dark.second.triad,
   .dark.reaction,
   .dark.secondary {
-    --l: 34.2%;
+    --l: 24.4%;
   }
   .bright.complement,
   .bright.second.triad,
   .bright.reaction,
   .bright.secondary {
-    --s: 59.8%;
-    --l: 56.7%;
+    --s: 89.4%;
+    --l: 54.4%;
   }
   .dim.complement,
   .dim.second.triad,
   .dim.reaction,
   .dim.secondary {
-    --s: 9.8%;
-    --l: 41.7%;
+    --s: 39.4%;
+    --l: 34.4%;
   }
   .accent {
-    --h: 235.7;
-    --s: 47.2%;
-    --l: 48.4%;
+    --h: 232.7;
+    --s: 74.5%;
+    --l: 44.2%;
   }
   .light.accent {
-    --l: 63.4%;
+    --l: 64.2%;
   }
   .dark.accent {
-    --l: 33.4%;
+    --l: 24.2%;
   }
   .bright.accent {
-    --s: 72.2%;
-    --l: 55.9%;
+    --s: 99.5%;
+    --l: 54.2%;
   }
   .dim.accent {
-    --s: 22.2%;
-    --l: 40.9%;
+    --s: 49.5%;
+    --l: 34.2%;
   }
   .second.accent {
-    --h: 182.5;
-    --s: 48%;
-    --l: 48.1%;
+    --h: 175.7;
+    --s: 74.3%;
+    --l: 44%;
   }
   .light.second.accent {
-    --l: 63.1%;
+    --l: 64%;
   }
   .dark.second.accent {
-    --l: 33.1%;
+    --l: 24%;
   }
   .bright.second.accent {
-    --s: 73%;
-    --l: 55.6%;
+    --s: 99.3%;
+    --l: 54%;
   }
   .dim.second.accent {
-    --s: 23%;
-    --l: 40.6%;
+    --s: 49.3%;
+    --l: 34%;
   }
   .split {
-    --h: 293.7;
-    --s: 42%;
-    --l: 49.8%;
+    --h: 291;
+    --s: 69.5%;
+    --l: 45.5%;
   }
   .light.split {
-    --l: 64.8%;
+    --l: 65.5%;
   }
   .dark.split {
-    --l: 34.8%;
+    --l: 25.5%;
   }
   .bright.split {
-    --s: 67%;
-    --l: 57.3%;
+    --s: 94.5%;
+    --l: 55.5%;
   }
   .dim.split {
-    --s: 17%;
-    --l: 42.3%;
+    --s: 44.5%;
+    --l: 35.5%;
   }
   .second.split {
-    --h: 130.2;
-    --s: 47.3%;
-    --l: 47.5%;
+    --h: 119.3;
+    --s: 65.8%;
+    --l: 46.2%;
   }
   .light.second.split {
-    --l: 62.5%;
+    --l: 66.2%;
   }
   .dark.second.split {
-    --l: 32.5%;
+    --l: 26.2%;
   }
   .bright.second.split {
-    --s: 72.3%;
-    --l: 55%;
+    --s: 90.8%;
+    --l: 56.2%;
   }
   .dim.second.split {
-    --s: 22.3%;
-    --l: 40%;
+    --s: 40.8%;
+    --l: 36.2%;
   }
   .triad {
-    --h: 264.6;
-    --s: 42.4%;
-    --l: 50.1%;
+    --h: 261.8;
+    --s: 69.5%;
+    --l: 45.5%;
   }
   .light.triad {
-    --l: 65.1%;
+    --l: 65.5%;
   }
   .dark.triad {
-    --l: 35.1%;
+    --l: 25.5%;
   }
   .bright.triad {
-    --s: 67.4%;
-    --l: 57.6%;
+    --s: 94.5%;
+    --l: 55.5%;
   }
   .dim.triad {
-    --s: 17.4%;
-    --l: 42.6%;
+    --s: 44.5%;
+    --l: 35.5%;
   }
   .third.triad {
-    --h: 156.4;
-    --s: 47.3%;
-    --l: 47.5%;
+    --h: 147.5;
+    --s: 74.3%;
+    --l: 44%;
   }
   .light.third.triad {
-    --l: 62.5%;
+    --l: 64%;
   }
   .dark.third.triad {
-    --l: 32.5%;
+    --l: 24%;
   }
   .bright.third.triad {
-    --s: 72.3%;
-    --l: 55%;
+    --s: 99.3%;
+    --l: 54%;
   }
   .dim.third.triad {
-    --s: 22.3%;
-    --l: 40%;
+    --s: 49.3%;
+    --l: 34%;
   }
   .tetrad {
-    --h: 249.9;
-    --s: 42.4%;
-    --l: 50.1%;
+    --h: 247.1;
+    --s: 69.5%;
+    --l: 45.5%;
   }
   .light.tetrad {
-    --l: 65.1%;
+    --l: 65.5%;
   }
   .dark.tetrad {
-    --l: 35.1%;
+    --l: 25.5%;
   }
   .bright.tetrad {
-    --s: 67.4%;
-    --l: 57.6%;
+    --s: 94.5%;
+    --l: 55.5%;
   }
   .dim.tetrad {
-    --s: 17.4%;
-    --l: 42.6%;
+    --s: 44.5%;
+    --l: 35.5%;
   }
   .second.tetrad {
-    --h: 340;
-    --s: 39.3%;
-    --l: 47.6%;
+    --h: 337.2;
+    --s: 68%;
+    --l: 43.4%;
   }
   .light.second.tetrad {
-    --l: 62.6%;
+    --l: 63.4%;
   }
   .dark.second.tetrad {
-    --l: 32.6%;
+    --l: 23.4%;
   }
   .bright.second.tetrad {
-    --s: 64.3%;
-    --l: 55.1%;
+    --s: 93%;
+    --l: 53.4%;
   }
   .dim.second.tetrad {
-    --s: 14.3%;
-    --l: 40.1%;
+    --s: 43%;
+    --l: 33.4%;
   }
   .third.tetrad {
-    --h: 83;
-    --s: 38.6%;
-    --l: 51%;
+    --h: 73.7;
+    --s: 65.8%;
+    --l: 46.2%;
   }
   .light.third.tetrad {
-    --l: 66%;
+    --l: 66.2%;
   }
   .dark.third.tetrad {
-    --l: 36%;
+    --l: 26.2%;
   }
   .bright.third.tetrad {
-    --s: 63.6%;
-    --l: 58.5%;
+    --s: 90.8%;
+    --l: 56.2%;
   }
   .dim.third.tetrad {
-    --s: 13.6%;
-    --l: 43.5%;
+    --s: 40.8%;
+    --l: 36.2%;
   }
   .fourth.tetrad {
-    --h: 169.5;
-    --s: 47.3%;
-    --l: 47.5%;
+    --h: 161.6;
+    --s: 74.3%;
+    --l: 44%;
   }
   .light.fourth.tetrad {
-    --l: 62.5%;
+    --l: 64%;
   }
   .dark.fourth.tetrad {
-    --l: 32.5%;
+    --l: 24%;
   }
   .bright.fourth.tetrad {
-    --s: 72.3%;
-    --l: 55%;
+    --s: 99.3%;
+    --l: 54%;
   }
   .dim.fourth.tetrad {
-    --s: 22.3%;
-    --l: 40%;
+    --s: 49.3%;
+    --l: 34%;
   }
   .warm {
     --a: 0.2;
-    background-image: linear-gradient(rgba(211, 109.2, 124.1, var(--a)), rgba(211, 109.2, 124.1, var(--a)));
+    background-image: linear-gradient(rgba(210.1, 99.4, 109.1, var(--a)), rgba(210.1, 99.4, 109.1, var(--a)));
   }
   .cool {
     --a: 0.2;
-    background-image: linear-gradient(rgba(14.7, 196.8, 200.3, var(--a)), rgba(14.7, 196.8, 200.3, var(--a)));
+    background-image: linear-gradient(rgba(11.3, 196.7, 198.7, var(--a)), rgba(11.3, 196.7, 198.7, var(--a)));
   }
   .neutral {
     --a: 0.2;
-    background-image: linear-gradient(rgba(66.4, 117.7, 171.9, var(--a)), rgba(66.4, 117.7, 171.9, var(--a)));
+    background-image: linear-gradient(rgba(38.1, 127.3, 190.4, var(--a)), rgba(38.1, 127.3, 190.4, var(--a)));
   }
   .dull {
     --a: 0.2;
-    background-image: linear-gradient(rgba(120.5, 120.5, 120.5, var(--a)), rgba(120.5, 120.5, 120.5, var(--a)));
+    background-image: linear-gradient(rgba(112, 112, 112, var(--a)), rgba(112, 112, 112, var(--a)));
+  }
+  
+  .starfield {
+    background-size: 67% 67%;
+    position: relative;
+  }
+  .starfield,
+  .starfield::before,
+  .starfield::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 264.583 264.583'%3E%3Cg fill='rgb(242,253,255)'%3E%3Ccircle r='0.25' cx='45.612' cy='172.724'/%3E%3Ccircle cy='235.924' cx='31.255' r='0.25'/%3E%3Ccircle cy='128.556' cx='113.572' r='0.25'/%3E%3Ccircle r='0.25' cx='197.842' cy='254.697'/%3E%3Ccircle cy='157.71' cx='94.854' r='0.25'/%3E%3Ccircle r='0.25' cx='141.963' cy='175.094'/%3E%3Ccircle cy='178.193' cx='214.704' r='0.25'/%3E%3Ccircle r='0.25' cx='134.202' cy='215.447'/%3E%3Ccircle r='0.1675' cx='116.668' cy='185.215'/%3E%3Ccircle cy='240.201' cx='66.829' r='0.1675'/%3E%3Ccircle cy='256.307' cx='236.043' r='0.1675'/%3E%3Ccircle r='0.1675' cx='84.619' cy='112.833'/%3E%3Ccircle cy='203.831' cx='97.385' r='0.1675'/%3E%3Ccircle r='0.1675' cx='197.933' cy='174.753'/%3E%3Ccircle r='0.1675' cx='90.923' cy='134.086'/%3E%3Ccircle cy='241.022' cx='117.298' r='0.1675'/%3E%3Ccircle cy='261.087' cx='6.079' r='0.1675'/%3E%3Ccircle r='0.1675' cx='68.178' cy='144.116'/%3E%3Ccircle r='0.1675' cx='181.392' cy='124.04'/%3E%3Ccircle cy='131.263' cx='21.586' r='0.1675'/%3E%3Ccircle r='0.1675' cx='176.785' cy='233.587'/%3E%3Ccircle cy='142.264' cx='155.529' r='0.1675'/%3E%3Ccircle cy='150.324' cx='244.704' r='0.1675'/%3E%3Ccircle r='0.1675' cx='49.063' cy='199.257'/%3E%3Ccircle cy='141.205' cx='122.46' r='0.1675'/%3E%3Ccircle r='0.1675' cx='211.989' cy='203.784'/%3E%3Ccircle r='0.1675' cx='19.036' cy='188.331'/%3E%3Ccircle cy='153.654' cx='209.272' r='0.1675'/%3E%3Ccircle r='0.1675' cx='184.288' cy='170.351'/%3E%3Ccircle cy='260.942' cx='131.568' r='0.1675'/%3E%3Ccircle cy='182.812' cx='74.754' r='0.1675'/%3E%3Ccircle r='0.1675' cx='245.837' cy='213.648'/%3E%3Ccircle cy='172.045' cx='25.814' r='0.1'/%3E%3Ccircle cy='146.539' cx='94.501' r='0.1'/%3E%3Ccircle r='0.1' cx='9.311' cy='205.282'/%3E%3Ccircle r='0.1' cx='80.12' cy='170.083'/%3E%3Ccircle cy='130.812' cx='143.8' r='0.1'/%3E%3Ccircle r='0.1' cx='92.828' cy='234.159'/%3E%3Ccircle cy='220.296' cx='112.35' r='0.1'/%3E%3Ccircle cy='208.669' cx='180.841' r='0.1'/%3E%3Ccircle r='0.1' cx='155.433' cy='219.408'/%3E%3Ccircle r='0.1' cx='95.671' cy='191.307'/%3E%3Ccircle cy='229.514' cx='217.551' r='0.1'/%3E%3Ccircle r='0.1' cx='63.656' cy='256.76'/%3E%3Ccircle cy='181.458' cx='57.032' r='0.1'/%3E%3Ccircle cy='202.358' cx='122.151' r='0.1'/%3E%3Ccircle r='0.1' cx='133.948' cy='210.036'/%3E%3Ccircle cy='263.153' cx='34.498' r='0.1'/%3E%3Ccircle r='0.1' cx='69.088' cy='208.242'/%3E%3Ccircle r='0.1' cx='226.588' cy='159.729'/%3E%3Ccircle cy='221.534' cx='82.484' r='0.1'/%3E%3Ccircle r='0.1' cx='244.995' cy='194.964'/%3E%3Ccircle cy='153.109' cx='47.215' r='0.1'/%3E%3Ccircle cy='139.708' cx='235.212' r='0.1'/%3E%3Ccircle r='0.1' cx='204.881' cy='195.712'/%3E%3Ccircle r='0.1' cx='11.506' cy='226.921'/%3E%3Ccircle cy='141.409' cx='187.893' r='0.1'/%3E%3Ccircle cy='225.002' cx='48.61' r='0.1'/%3E%3Ccircle r='0.1' cx='105.404' cy='251.331'/%3E%3Ccircle cy='241.001' cx='157.261' r='0.1'/%3E%3Ccircle r='0.1' cx='60.655' cy='172.008'/%3E%3Ccircle r='0.1' cx='148.36' cy='228.5'/%3E%3Ccircle cy='218.639' cx='191.976' r='0.1'/%3E%3Ccircle r='0.1' cx='149.144' cy='248.038'/%3E%3Ccircle cy='175.131' cx='128.932' r='0.1'/%3E%3Ccircle cy='192.12' cx='136.992' r='0.1'/%3E%3Ccircle r='0.1' cx='136.224' cy='236.795'/%3E%3Ccircle cy='191.97' cx='224.861' r='0.1'/%3E%3Ccircle r='0.1' cx='236.248' cy='228.364'/%3E%3Ccircle r='0.1' cx='152.495' cy='188.758'/%3E%3Ccircle cy='205.389' cx='154.753' r='0.1'/%3E%3Ccircle cy='163.571' cx='113.758' r='0.1'/%3E%3Ccircle r='0.1' cx='87.406' cy='245.694'/%3E%3Ccircle r='0.1' cx='19.803' cy='154.819'/%3E%3Ccircle cy='157.71' cx='148.607' r='0.1'/%3E%3Ccircle r='0.1' cx='159.82' cy='176.401'/%3E%3Ccircle cy='170.82' cx='242.052' r='0.1'/%3E%3Ccircle cy='187.184' cx='176.96' r='0.1'/%3E%3Ccircle r='0.1' cx='133.489' cy='156.659'/%3E%3Ccircle r='0.1' cx='3.769' cy='162.293'/%3E%3Ccircle cy='186.464' cx='189.807' r='0.1'/%3E%3Ccircle cy='241.858' cx='44.986' r='0.1'/%3E%3Ccircle r='0.1' cx='25.486' cy='211.102'/%3E%3Ccircle cy='205.544' cx='72.942' r='0.1'/%3E%3Ccircle r='0.1' cx='200.384' cy='236.371'/%3E%3Ccircle r='0.1' cx='261.919' cy='137.301'/%3E%3Ccircle cy='249.547' cx='255.573' r='0.1'/%3E%3Ccircle r='0.1' cx='171.901' cy='160.304'/%3E%3Ccircle cy='240.963' cx='228.512' r='0.1'/%3E%3Ccircle cy='175.197' cx='93.493' r='0.1'/%3E%3Ccircle r='0.1' cx='171.342' cy='217.394'/%3E%3Ccircle cy='205.526' cx='224.586' r='0.1'/%3E%3Ccircle r='0.1' cx='255.413' cy='183.253'/%3E%3Ccircle r='0.1' cx='173.331' cy='200.335'/%3E%3Ccircle cy='258.517' cx='171.441' r='0.1'/%3E%3Ccircle cy='101.938' cx='146.532' r='0.25'/%3E%3Ccircle r='0.25' cx='238.566' cy='24.408'/%3E%3Ccircle r='0.25' cx='226.234' cy='113.619'/%3E%3Ccircle cy='31.082' cx='113.234' r='0.25'/%3E%3Ccircle r='0.25' cx='42.976' cy='99.2'/%3E%3Ccircle cy='26.107' cx='30.024' r='0.25'/%3E%3Ccircle r='0.25' cx='54.52' cy='59.313'/%3E%3Ccircle cy='52.13' cx='193.942' r='0.25'/%3E%3Ccircle cy='114.412' cx='12.329' r='0.1675'/%3E%3Ccircle r='0.1675' cx='83.175' cy='81.274'/%3E%3Ccircle r='0.1675' cx='160.179' cy='51.45'/%3E%3Ccircle cy='18.59' cx='6.466' r='0.1675'/%3E%3Ccircle r='0.1675' cx='183.856' cy='83.169'/%3E%3Ccircle cy='67.388' cx='113.866' r='0.1675'/%3E%3Ccircle cy='79.8' cx='26.221' r='0.1675'/%3E%3Ccircle r='0.1675' cx='215.685' cy='131.413'/%3E%3Ccircle r='0.1675' cx='261.073' cy='6.102'/%3E%3Ccircle cy='94.401' cx='110.725' r='0.1675'/%3E%3Ccircle cy='10.042' cx='133.727' r='0.1675'/%3E%3Ccircle r='0.1675' cx='207.31' cy='72.854'/%3E%3Ccircle cy='34.813' cx='76.093' r='0.1675'/%3E%3Ccircle r='0.1675' cx='224.393' cy='42.582'/%3E%3Ccircle r='0.1675' cx='107.186' cy='48.686'/%3E%3Ccircle cy='95.441' cx='215.485' r='0.1675'/%3E%3Ccircle r='0.1675' cx='141.621' cy='64.655'/%3E%3Ccircle cy='66.729' cx='236.092' r='0.1675'/%3E%3Ccircle cy='118.413' cx='245.962' r='0.1675'/%3E%3Ccircle r='0.1675' cx='197.973' cy='4.47'/%3E%3Ccircle cy='65.327' cx='10.667' r='0.1675'/%3E%3Ccircle r='0.1675' cx='169.076' cy='21.619'/%3E%3Ccircle r='0.1675' cx='243.684' cy='89.394'/%3E%3Ccircle cy='15.924' cx='90.642' r='0.1675'/%3E%3Ccircle r='0.1' cx='203.117' cy='25.203'/%3E%3Ccircle cy='18.679' cx='259.074' r='0.1'/%3E%3Ccircle r='0.1' cx='188.36' cy='105.076'/%3E%3Ccircle r='0.1' cx='32.082' cy='60.833'/%3E%3Ccircle cy='97.39' cx='88.918' r='0.1'/%3E%3Ccircle r='0.1' cx='52.106' cy='115.649'/%3E%3Ccircle cy='123.671' cx='158.843' r='0.1'/%3E%3Ccircle cy='149.977' cx='228.269' r='0.1'/%3E%3Ccircle r='0.1' cx='104.923' cy='106.209'/%3E%3Ccircle cy='28.098' cx='152.36' r='0.1'/%3E%3Ccircle r='0.1' cx='229.272' cy='175.956'/%3E%3Ccircle r='0.1' cx='197.598' cy='109.619'/%3E%3Ccircle cy='126.742' cx='199.934' r='0.1'/%3E%3Ccircle r='0.1' cx='165.89' cy='104.799'/%3E%3Ccircle cy='94.672' cx='203.759' r='0.1'/%3E%3Ccircle cy='87.856' cx='125.505' r='0.1'/%3E%3Ccircle r='0.1' cx='223.212' cy='79.49'/%3E%3Ccircle cy='4.333' cx='11.392' r='0.1'/%3E%3Ccircle r='0.1' cx='121.635' cy='104.136'/%3E%3Ccircle r='0.1' cx='132.905' cy='116.524'/%3E%3Ccircle cy='46.448' cx='90.707' r='0.1'/%3E%3Ccircle cy='97.177' cx='66.145' r='0.1'/%3E%3Ccircle r='0.1' cx='151.181' cy='83.93'/%3E%3Ccircle r='0.1' cx='45.908' cy='12.875'/%3E%3Ccircle cy='89.361' cx='170.02' r='0.1'/%3E%3Ccircle r='0.1' cx='36.048' cy='112.885'/%3E%3Ccircle cy='91.86' cx='1.643' r='0.1'/%3E%3Ccircle cy='73.334' cx='131.517' r='0.1'/%3E%3Ccircle r='0.1' cx='173.424' cy='79.168'/%3E%3Ccircle cy='8.253' cx='59.46' r='0.1'/%3E%3Ccircle r='0.1' cx='223.516' cy='23.397'/%3E%3Ccircle r='0.1' cx='249.224' cy='43.717'/%3E%3Ccircle cy='39.06' cx='201.492' r='0.1'/%3E%3Ccircle r='0.1' cx='112.002' cy='13.529'/%3E%3Ccircle cy='127.379' cx='169.217' r='0.1'/%3E%3Ccircle cy='67.963' cx='185.446' r='0.1'/%3E%3Ccircle r='0.1' cx='216.42' cy='117.416'/%3E%3Ccircle r='0.1' cx='179.959' cy='43.044'/%3E%3Ccircle cy='.312' cx='48.348' r='0.1'/%3E%3Ccircle cy='132.732' cx='42.913' r='0.1'/%3E%3Ccircle r='0.1' cx='142.119' cy='36.324'/%3E%3Ccircle cy='92.185' cx='229.232' r='0.1'/%3E%3Ccircle r='0.1' cx='98.773' cy='6.294'/%3E%3Ccircle r='0.1' cx='101.757' cy='81.974'/%3E%3Ccircle cy='38.611' cx='62.785' r='0.1'/%3E%3Ccircle cy='2.099' cx='158.208' r='0.1'/%3E%3Ccircle r='0.1' cx='121.572' cy='46.871'/%3E%3Ccircle r='0.1' cx='53.426' cy='79.029'/%3E%3Ccircle cy='46.765' cx='31.373' r='0.1'/%3E%3Ccircle r='0.1' cx='85.519' cy='66.355'/%3E%3Ccircle cy='46.981' cx='9.695' r='0.1'/%3E%3Ccircle cy='18.012' cx='186.147' r='0.1'/%3E%3Ccircle r='0.1' cx='212.447' cy='9.75'/%3E%3Ccircle cy='55.866' cx='252.928' r='0.1'/%3E%3Ccircle r='0.1' cx='73.34' cy='56.742'/%3E%3Ccircle r='0.1' cx='258.914' cy='165.121'/%3E%3Ccircle cy='79.112' cx='255.393' r='0.1'/%3E%3Ccircle r='0.1' cx='235.737' cy='9.162'/%3E%3Ccircle cy='60.581' cx='216.592' r='0.1'/%3E%3Ccircle cy='129.075' cx='77.036' r='0.1'/%3E%3Ccircle r='0.1' cx='243.825' cy='102.243'/%3E%3C/g%3E%3C/svg%3E");
+    background-position: center center;
+    background-repeat: repeat;
+  }
+  .starfield::before {
+    transform: rotateX(180deg);
+  }
+  .starfield::before {
+    content: "";
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    pointer-events: none;
+    z-index: -125;
+  }
+  
+  #nav h1 {
+    font-size: var(--font-size);
+  }
+  .feature {
+    text-decoration: none;
+    max-width: 100%;
+    display: block;
+    border: 0.15rem dashed #f2fdff;
+  }
+  .feature h1 {
+    background: #061e23;
+    color: #f2fdff;
+  }
+  @media screen and (min-width: 61.904rem) {
+    .feature {
+      border: 0.2rem dashed white;
+    }
   }
   

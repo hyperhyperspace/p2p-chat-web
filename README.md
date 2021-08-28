@@ -8,7 +8,13 @@ You can join Hyper Hyper Space's example chat using the following fragment:
 
 /#/en/acre-cliff-busy
 
-I will host this somewhere so it can be used online. Until then, you can do
+I will host this somewhere so it can be used online. Until then, you can do:
+
+
+```
+yarn
+```
+and then:
 
 ```
 yarn start

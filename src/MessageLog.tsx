@@ -31,7 +31,7 @@ function MessageLog(props: {messages?: MutableSet<ChatMessage>, chatRoomConfig: 
         return <div>loading...</div>;
     } else {
         return (
-            <div ref={scrollRef} className="dark cool black text-margin-bottom overflow-scroll" style={{height: '99%'}}>
+            <div ref={scrollRef} className="text-margin-bottom overflow-scroll" style={{height: '99%'}}>
                 <div className="monospace no-margins padding responsive ">
                     {Array.from(props.messages.values()).sort((a: ChatMessage, b: ChatMessage) => a.timestamp as number - (b.timestamp as number)).map((msg:ChatMessage) => (
                         <p key={msg.getLastHash()}><strong>{msg.getAuthor()?.info?.name}:</strong> {msg.text}</p>

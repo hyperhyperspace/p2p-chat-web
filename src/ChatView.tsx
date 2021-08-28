@@ -30,7 +30,7 @@ function ChatView(props: {init?: SpaceInit, chatRoomConfig?: ChatRoomConfig, loo
   }
 
   return (
-    <div id="chatView" className="tablet overlay no-margin-top no-margin-bottom no-margin-left no-margin-right padding gutter responsive" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
+    <div id="chatView" className="black starfield inner-gutter" style={{display:'flex', flexDirection: 'column', height: '100%'}}>
       
       { !isIframe &&
       <ChatHeader showWelcome={props.init === undefined} room={entry} lookupChat={props.lookupChat} resources={props.resources} />
