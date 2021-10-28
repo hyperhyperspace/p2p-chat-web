@@ -44,7 +44,7 @@ const main = async () => {
                       new Store(new IdbBackend(chatRoomName + '-store')) :
                       new Store(new MemoryBackend(chatRoomName + '-mem'));*/
 
-  const backend = new WorkerSafeIdbBackend('chat-window-store');
+  const backend = new WorkerSafeIdbBackend('chat-window-store-v9');
   let dbBackendError: (string|undefined) = undefined;
 
 
@@ -52,7 +52,7 @@ const main = async () => {
     console.log('Initializing storage backend...');
     await backend.ready();
     console.log('Storage backend ready');
-  } catch (e) {
+  } catch (e: any) {
     dbBackendError = e.toString();
   }
   

@@ -146,7 +146,7 @@ function MessageInput(props: {room?: ChatRoom, chatRoomConfig?: ChatRoomConfig})
                 </div>
             }
             <div className="grid no-margin-bottom">
-                <input ref={messageInput} type="text" value={currentText} onKeyPress={handleKeyPress} onChange={handleTextChange} className="grid-width-nine monospace white" />
+                <input ref={messageInput} type="text" value={currentText} onKeyPress={handleKeyPress} onChange={handleTextChange} className="grid-width-nine monospace" />
                 <button onClick={sendMessage} className="grid-width-three bright action monospace">Send</button>
             </div>
         </div>
